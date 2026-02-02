@@ -31,7 +31,7 @@
         "url": "https://github.com/emargareten/inertia-modal.git"
     },
     "peerDependencies": {
-        "@inertiajs/vue3": "^1.0.0",
+        "@inertiajs/vue3": "^1.0.0 || ^2.0.0",
         "axios": "^1.2.0",
         "vue": "^3.2.45"
     },
