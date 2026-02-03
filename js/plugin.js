@@ -5,6 +5,6 @@ export const plugin = {
   install(app, options) {
     resolver.setResolveCallback(options.resolve)
 
-    preserveBackdrop()
+    preserveBackdrop(app)
   },
 }
