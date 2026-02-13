@@ -133,11 +133,14 @@ class Modal implements Responsable
         ];
 
         $request = request();
-        $page = [
-            'props' => $props,
-            'url' => Str::start(Str::after($request->fullUrl(), $request->getSchemeAndHttpHost()), '/'),
-            'version' => Inertia::getVersion(),
-        ];
+        $page = array_merge(
+            [
+                'props' => $props,
+                'url' => Str::start(Str::after($request->fullUrl(), $request->getSchemeAndHttpHost()), '/'),
+                'version' => Inertia::getVersion(),
+            ],
+            $this->resolveFlashData($request),
+        );
 
         return new JsonResponse($page, 200, ['X-Inertia-Modal' => 'true']);
     }
@@ -153,6 +156,17 @@ class Modal implements Responsable
         return (new Response('', $shared))
             ->toResponse(request())
             ->getData(true)['props'];
+    }
+
+    protected function resolveFlashData(Request $request): array
+    {
+        if (! method_exists(Inertia::class, 'getFlashed')) {
+            return [];
+        }
+
+        $flash = Inertia::getFlashed($request);
+
+        return $flash ? ['flash' => $flash] : [];
     }
 
     protected function handleRoute(Request $request, Route $route): mixed
