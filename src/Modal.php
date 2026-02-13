@@ -160,7 +160,7 @@ class Modal implements Responsable
 
     protected function resolveFlashData(Request $request): array
     {
-        if (! method_exists(Inertia::class, 'getFlashed')) {
+        if (! is_callable([Inertia::class, 'getFlashed'])) {
             return [];
         }
 
